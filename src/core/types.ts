@@ -2,7 +2,7 @@ import type { ComponentType } from 'react';
 
 export type StationId =
   | 'estacao-1-flashcards'
-  | 'estacao-2-phishing'
+  | 'estacao-2-secretaria'
   | 'estacao-3-passwords'
   | 'estacao-4-privacidade';
 

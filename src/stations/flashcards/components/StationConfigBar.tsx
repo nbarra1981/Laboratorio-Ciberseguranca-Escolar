@@ -139,7 +139,7 @@ export function StationConfigBar({
             className="inline-flex items-center gap-1.5 min-h-[38px] px-3.5 py-1.5 rounded-lg border border-sky-300 dark:border-sky-700 bg-sky-50 dark:bg-sky-950/60 text-xs sm:text-sm font-semibold text-sky-900 dark:text-sky-200 whitespace-nowrap shrink-0 hover:bg-sky-100 dark:hover:bg-sky-900/60 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-600 dark:focus-visible:ring-sky-400"
           >
             <BarChart3 className="w-4 h-4" aria-hidden="true" />
-            <span>Estatísticas</span>
+            <span>Ver Estatísticas</span>
           </button>
           {mode !== 'free' && (
             <button

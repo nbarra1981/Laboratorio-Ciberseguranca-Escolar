@@ -6,6 +6,7 @@ import type {
   LearningMode,
   ProgressStats,
 } from '../logic/flashcardEngine';
+import { DashboardStats } from './DashboardStats';
 import { ProgressPanel } from './ProgressPanel';
 
 interface StatsModalProps {
@@ -78,7 +79,7 @@ export function StatsModal({
               id="stats-modal-title"
               className="text-lg sm:text-xl font-display font-bold text-slate-900 dark:text-slate-50 truncate"
             >
-              Estatísticas e progresso
+              Estatísticas e Dashboard
             </h2>
           </div>
 
@@ -93,19 +94,22 @@ export function StatsModal({
           </button>
         </div>
 
-        <div className="p-5 sm:p-6">
-          <ProgressPanel
-            embedded
-            stats={stats}
-            domainChartData={domainChartData}
-            domainFilter={domainFilter}
-            mode={mode}
-            totalFlips={totalFlips}
-            totalInteractions={totalInteractions}
-            quick10AnsweredCount={quick10AnsweredCount}
-            quick10Total={quick10Total}
-            elapsedSeconds={elapsedSeconds}
-          />
+        <div className="p-5 sm:p-6 space-y-6">
+          <DashboardStats items={domainChartData} />
+          <div className="pt-4 border-t border-slate-200 dark:border-slate-800">
+            <ProgressPanel
+              embedded
+              stats={stats}
+              domainChartData={domainChartData}
+              domainFilter={domainFilter}
+              mode={mode}
+              totalFlips={totalFlips}
+              totalInteractions={totalInteractions}
+              quick10AnsweredCount={quick10AnsweredCount}
+              quick10Total={quick10Total}
+              elapsedSeconds={elapsedSeconds}
+            />
+          </div>
         </div>
 
         <div className="px-5 sm:px-6 py-3.5 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 flex justify-end">

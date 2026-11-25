@@ -1,5 +1,6 @@
 import type { StationDefinition } from './types';
 import { FlashCardsStation } from '../stations/flashcards/FlashCardsStation';
+import { SecretariaStation } from '../stations/secretaria/SecretariaStation';
 
 /**
  * Registo central de estações do Laboratório de Informática.
@@ -28,17 +29,27 @@ export const stationsRegistry: StationDefinition[] = [
     component: FlashCardsStation,
   },
   {
-    id: 'estacao-2-phishing',
+    id: 'estacao-2-secretaria',
     number: 2,
-    title: 'Detetor de Mensagens Suspeitas',
-    shortTitle: 'Detetor de Phishing',
-    subtitle: 'Estação 2 — Análise de Correio e Mensagens',
+    title: 'A Secretária do Professor',
+    shortTitle: 'Secretária Segura',
+    subtitle: 'Estação 2 — A Secretária do Professor',
     description:
-      'Simulador prático de inspeção de mensagens escolares para identificar remetentes falsos, hiperligações enganadoras e anexos perigosos.',
-    methodology: 'Análise guiada de casos',
-    estimatedTime: 'Em preparação',
-    status: 'coming_soon',
-    topics: ['Inspeção de cabeçalhos', 'Hiperligações falsas', 'Sinais de manipulação'],
+      'Quadro interativo sobre a secretária de um professor para identificar 8 riscos de ciber-higiene, pautas em papel, post-its, router e boas práticas com voz em português.',
+    methodology: 'Quadro interativo com imagem e quiz',
+    estimatedTime: '15 a 25 min',
+    status: 'active',
+    topics: [
+      'Router Wi-Fi',
+      'Portátil Desbloqueado',
+      'Credenciais em Post-it',
+      'Cartão de Identificação',
+      'Documentos e Pautas',
+      'Caderno Confidencial',
+      'Smartphone',
+      'Dispositivo USB',
+    ],
+    component: SecretariaStation,
   },
   {
     id: 'estacao-3-passwords',
