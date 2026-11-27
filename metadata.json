@@ -2,5 +2,7 @@
   "name": "Laboratório de Cibersegurança Escolar",
   "description": "Aplicação educativa interativa de introdução da temática da cibersegurança no universo escolar. ",
   "requestFramePermissions": [],
-  "majorCapabilities": []
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
 }

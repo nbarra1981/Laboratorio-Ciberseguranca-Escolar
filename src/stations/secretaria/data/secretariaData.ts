@@ -3,15 +3,28 @@ export interface SecretaraItem {
   number: number;
   title: string;
   shortTitle: string;
-  x: number; // percentage width
-  y: number; // percentage height
+  theme: string;
+  x: number; // percentage of image width
+  y: number; // percentage of image height
   w: number; // percentage width box
   h: number; // percentage height box
+  zIndex?: number;
   risk: string;
   consequences: string;
   bestPractices: string[];
   tools: string[];
-  speechText: string;
+  audioSummary: string;
+}
+
+export interface SecretariaQuizQuestion {
+  id: number;
+  tema: string;
+  relatedItemId: string;
+  pergunta: string;
+  opcoes: [string, string, string, string];
+  respostaCorreta: number;
+  explicacao: string;
+  recomendacao: string;
 }
 
 export const SECRETARIA_ITEMS: SecretaraItem[] = [
@@ -20,300 +33,388 @@ export const SECRETARIA_ITEMS: SecretaraItem[] = [
     number: 1,
     title: 'Router Wi-Fi',
     shortTitle: 'Router Wi-Fi',
-    x: 12,
-    y: 18,
-    w: 16,
-    h: 22,
-    risk: 'Riscos associados a palavras-passe de fábrica, configurações inseguras e firmware desatualizado.',
-    consequences: 'Interceção de tráfego de rede, acesso não autorizado à rede escolar/doméstica e exploração de vulnerabilidades conhecidas do router.',
+    theme: 'Segurança de redes',
+    x: 2,
+    y: 4,
+    w: 19,
+    h: 35,
+    zIndex: 10,
+    risk: 'Utilização de palavras-passe de fábrica, configurações inseguras e firmware desatualizado.',
+    consequences:
+      'Interceção de tráfego de rede, acesso não autorizado à rede doméstica ou escolar e exploração de vulnerabilidades conhecidas no equipamento.',
     bestPractices: [
-      'Alterar imediatamente as credenciais de administração predefinidas.',
-      'Utilizar protocolos de cifra robustos WPA2 ou WPA3.',
-      'Atualizar regularmente o firmware do equipamento.',
-      'Evitar a ligação a redes Wi-Fi públicas abertas sem VPN para aceder a plataformas sensíveis.',
+      'Alterar imediatamente as credenciais de administração predefinidas de fábrica.',
+      'Configurar a rede sem fios com os protocolos de cifra WPA2 ou WPA3.',
+      'Atualizar regularmente o firmware do router para corrigir falhas de segurança.',
+      'Evitar aceder a plataformas escolares em redes Wi-Fi públicas abertas; preferir a partilha de dados do telemóvel ou uma VPN.',
     ],
-    tools: ['WPA3 / WPA2-AES', 'Painel de Administração do Router', 'Rede Privada Virtual (VPN)'],
-    speechText:
-      'Sou o router Wi-Fi. Se mantiver as credenciais de fábrica e o firmware desatualizado, qualquer utilizador mal-intencionado pode aceder à rede e intercetar comunicações. Altere a palavra-passe de administração, utilize WPA2 ou WPA3 e atualize o firmware regularmente. Fora de escola, evite redes públicas abertas.',
+    tools: ['WPA3 / WPA2-AES', 'Painel de Administração do Router', 'Partilha de dados / VPN'],
+    audioSummary:
+      'Um router Wi-Fi com credenciais de fábrica, configurações inseguras ou firmware desatualizado facilita a entrada de terceiros na rede e a interceção do trabalho docente. Altere as credenciais de administração predefinidas, utilize cifra WPA2 ou WPA3 e evite redes públicas abertas ao aceder a plataformas escolares.',
   },
   {
     id: 'laptop',
     number: 2,
     title: 'Computador Portátil com Sessão Desbloqueada',
     shortTitle: 'Portátil Desbloqueado',
-    x: 35,
-    y: 15,
-    w: 32,
-    h: 55,
-    risk: 'Acesso não autorizado à informação e às plataformas escolares durante a ausência do docente.',
-    consequences: 'Compromisso total de dados pessoais e de alunos, envio de mensagens em nome do professor e acesso indevido a aplicações institucionais.',
+    theme: 'Controlo de acessos e cifra',
+    x: 31.5,
+    y: 11.5,
+    w: 33.8,
+    h: 27,
+    zIndex: 10,
+    risk: 'Acesso não autorizado à sessão ativa, documentos locais e plataformas escolares durante a ausência do professor.',
+    consequences:
+      'Consulta ou alteração indevida de classificações, envio de mensagens em nome do docente e comprometimento de ficheiros em caso de furto.',
     bestPractices: [
-      'Bloquear sempre a sessão ao afastar-se da secretária (Windows + L ou Control + Command + Q no macOS).',
-      'Configurar o bloqueio automático de ecrã por inatividade.',
-      'Manter o sistema operativo e as aplicações atualizadas.',
-      'Garantir a cifra do disco com BitLocker ou Encriptação do dispositivo.',
-      'Realizar cópias de segurança regulares seguindo a regra 3-2-1.',
+      'Bloquear sempre a sessão ao levantar-se com Windows + L (ou Control + Command + Q no macOS).',
+      'Configurar o bloqueio automático do ecrã após poucos minutos de inatividade.',
+      'Manter o sistema operativo e todas as aplicações atualizadas.',
+      'Confirmar a proteção ativa de antivírus, como o Microsoft Defender.',
+      'Ativar a cifra integral do disco através do BitLocker ou da Encriptação do dispositivo.',
+      'Efetuar cópias de segurança regulares seguindo a regra 3-2-1.',
     ],
-    tools: ['Windows + L / FileVault', 'Microsoft Defender', 'BitLocker / Encriptação do Dispositivo', 'Windows Update'],
-    speechText:
-      'Sou o portátil do professor, e estou com a sessão desbloqueada. Basta um momento de ausência para que alguém aceda a dados confidenciais. Bloqueie sempre o ecrã com Windows mais L antes de se levantar. Ative o bloqueio automático, mantenha o sistema atualizado e assegure que o disco está cifrado com BitLocker.',
+    tools: [
+      'Windows + L',
+      'Bloqueio automático',
+      'Microsoft Defender',
+      'BitLocker / Encriptação do dispositivo',
+      'Cópias de segurança 3-2-1',
+    ],
+    audioSummary:
+      'Deixar o computador portátil com a sessão desbloqueada permite que terceiros acedam imediatamente às plataformas escolares e a ficheiros sensíveis durante uma breve ausência. Bloqueie sempre a sessão com Windows + L ao levantar-se, ative o bloqueio automático e assegure a cifra do disco com BitLocker ou Encriptação do dispositivo.',
   },
   {
     id: 'postit',
     number: 3,
     title: 'Nota Adesiva com Credenciais de Acesso',
-    shortTitle: 'Post-it com Palavra-passe',
-    x: 65,
-    y: 16,
-    w: 12,
-    h: 16,
-    risk: 'Exposição direta de nomes de utilizador e palavras-passe à vista de qualquer visitante ou colega.',
-    consequences: 'Utilização indevida das credenciais institucionais, acesso não autorizado ao email e às plataformas pedagógicas.',
+    shortTitle: 'Post-it com Credenciais',
+    theme: 'Gestão de credenciais e MFA',
+    x: 65.5,
+    y: 15,
+    w: 7,
+    h: 15.5,
+    zIndex: 30,
+    risk: 'Exposição direta de nomes de utilizador e palavras-passe, frequentemente agravada pela reutilização da mesma senha noutros serviços.',
+    consequences:
+      'Apropriação imediata de contas institucionais e pessoais por colegas, alunos ou visitantes que passem pela secretária.',
     bestPractices: [
-      'Nunca registar palavras-passe em papel ou notas adesivas.',
-      'Utilizar palavras-passe longas, robustas e distintas para cada serviço.',
-      'Adotar um gestor de palavras-passe credenciado, como o KeePassXC ou o Bitwarden.',
-      'Ativar a autenticação multifator (MFA) em todas as contas.',
+      'Nunca registar nomes de utilizador ou palavras-passe em post-its ou papéis junto ao ecrã.',
+      'Criar palavras-passe longas, robustas e distintas para cada serviço.',
+      'Utilizar um gestor de palavras-passe seguro, como o KeePassXC ou o Bitwarden.',
+      'Ativar a autenticação multifator (MFA) em todas as contas escolares e pessoais.',
     ],
-    tools: ['KeePassXC (local e aberto)', 'Bitwarden', 'Autenticação Multifator (MFA)'],
-    speechText:
-      'Sou a nota adesiva colada no ecrã com a palavra-passe escrita à mão. Estou totalmente exposta a quem entrar na sala. Nunca aponte credenciais em papel. Utilize um gestor de palavras-passe como o KeePassXC ou o Bitwarden para guardar credenciais únicas e seguras, e memorize apenas a palavra-passe mestra.',
+    tools: ['KeePassXC', 'Bitwarden', 'Autenticação Multifator (MFA)'],
+    audioSummary:
+      'Anotar o nome de utilizador e a palavra-passe numa nota adesiva junto ao ecrã expõe diretamente as contas escolares do professor a qualquer pessoa na sala, agravado pela reutilização de senhas. Retire os registos em papel, utilize um gestor como o KeePassXC ou o Bitwarden com senhas distintas e ative a autenticação multifator.',
   },
   {
     id: 'badge',
     number: 4,
     title: 'Cartão de Identificação do Professor',
     shortTitle: 'Cartão de Identificação',
-    x: 29,
-    y: 38,
-    w: 10,
-    h: 18,
-    risk: 'Exposição indevida de dados pessoais e profissionais e riscos de engenharia social.',
-    consequences: 'Usurpação de identidade, facilitação de acesso físico não autorizado às instalações escolares caso possua chip RFID.',
+    theme: 'Segurança física e engenharia social',
+    x: 29.5,
+    y: 41.5,
+    w: 9,
+    h: 16.5,
+    zIndex: 20,
+    risk: 'Exposição indevida de dados pessoais e profissionais, risco de usurpação de identidade e facilitação de engenharia social.',
+    consequences:
+      'Utilização abusiva da identidade do docente ou entrada indevida em espaços reservados da escola, caso o cartão possua controlo de acessos.',
     bestPractices: [
-      'Guardar o cartão de identificação num local seguro quando não estiver em uso.',
-      'Não exibir o cartão fora do recinto escolar de forma desnecessária.',
-      'Comunicar imediatamente aos serviços administrativos e de TIC a perda ou furto do cartão.',
+      'Guardar o cartão de identificação num local seguro e discreto quando não estiver a ser usado.',
+      'Evitar deixá-lo pousado à vista em zonas comuns ou fotografá-lo em redes sociais.',
+      'Comunicar de imediato aos serviços do agrupamento qualquer situação de perda ou furto para desativação.',
     ],
-    tools: ['Controlo de Acessos Físicos', 'Serviços Administrativos do Agrupamento'],
-    speechText:
-      'Sou o cartão de identificação profissional. Deixado à vista na mesa, revela o seu nome e cargo, podendo facilitar tentativas de engenharia social ou acesso físico indevido caso inclua chip de portas. Mantenha-o seguro e comunique de imediato qualquer perda.',
+    tools: ['Guarda física segura', 'Comunicação imediata ao Agrupamento'],
+    audioSummary:
+      'O cartão de identificação deixado à vista expõe dados pessoais e profissionais do docente, facilitando tentativas de engenharia social, usurpação de identidade ou acesso físico indevido às instalações. Guarde o cartão num local seguro quando não o estiver a utilizar e comunique de imediato qualquer perda ou furto.',
   },
   {
     id: 'papers',
     number: 5,
-    title: 'Documentos Impressos com Dados Pessoais',
-    shortTitle: 'Documentos em Papel e Pautas',
-    x: 10,
-    y: 38,
-    w: 24,
-    h: 42,
-    risk: 'Acesso não autorizado a informação pessoal e confidencial de alunos em formato físico.',
-    consequences: 'Violação grave do RGPD, exposição de pautas, avaliações e relatórios pedagógicos a pessoas não autorizadas.',
+    title: 'Documentos Impressos com Dados Pessoais e Classificações',
+    shortTitle: 'Documentos e Pautas em Papel',
+    theme: 'RGPD e política de secretária limpa',
+    x: 6,
+    y: 45,
+    w: 22.5,
+    h: 46,
+    zIndex: 10,
+    risk: 'Acesso não autorizado a pautas, testes, relatórios e dados pessoais e confidenciais dos alunos em suporte físico.',
+    consequences:
+      'Violação do RGPD, exposição pública de avaliações e dados sensíveis de menores e eventual responsabilização disciplinar ou legal.',
     bestPractices: [
-      'Adotar rigorosamente uma política de secretária limpa (Clean Desk Policy).',
-      'Guardar todos os documentos impressos em armários trancados.',
-      'Aplicar o princípio da minimização de dados e confidencialidade.',
-      'Proceder à destruição segura (destruidor de papel) de documentos que já não precisem de ser conservados.',
+      'Aplicar os princípios de confidencialidade e minimização de dados previstos no RGPD.',
+      'Adotar uma política de secretária limpa (Clean Desk Policy) sempre que se ausenta da mesa.',
+      'Armazenar pautas, testes e processos individuais em armários fechados à chave.',
+      'Proceder à destruição segura (trituradora de papel) de documentos que já não necessitem de conservação.',
     ],
-    tools: ['Clean Desk Policy', 'Armários com Chave', 'Destruidor de Documentos Certificado'],
-    speechText:
-      'Somos os documentos impressos com pautas e avaliações de alunos em cima da secretária. O RGPD protege os dados em papel com o mesmo rigor que os dados digitais. Adote a política de secretária limpa, guarde os papéis em armários fechados à chave e destrua em segurança o que já não for necessário.',
+    tools: ['Clean Desk Policy', 'Armários fechados à chave', 'Destruidora de documentos'],
+    audioSummary:
+      'Pautas, testes e relatórios deixados sobre a secretária violam os princípios de confidencialidade e minimização de dados do RGPD, expondo informação pessoal dos alunos. Adote uma política de secretária limpa, guarde os documentos em armários fechados à chave e destrua com segurança o que já não necessitar.',
   },
   {
     id: 'notebook',
     number: 6,
-    title: 'Caderno Aberto com Informação Confidencial',
+    title: 'Caderno Aberto com Informação Confidencial e Credenciais',
     shortTitle: 'Caderno Confidencial',
-    x: 69,
-    y: 14,
-    w: 24,
-    h: 38,
-    risk: 'Registo inseguro de palavras-passe, notas sensíveis e classificações escolares em suporte de papel.',
-    consequences: 'Risco elevado de perda, furto, visualização indevida ou reprodução fotográfica de dados protegidos.',
+    theme: 'Proteção de registos e credenciais',
+    x: 73,
+    y: 11,
+    w: 23.5,
+    h: 37,
+    zIndex: 10,
+    risk: 'Registo inseguro em papel de palavras-passe, códigos de autenticação e dados pessoais ou classificações de alunos.',
+    consequences:
+      'Acesso indevido, perda, furto ou reprodução rápida por fotografia dos dados anotados sem qualquer mecanismo de cifra.',
     bestPractices: [
-      'Substituir o registo manuscrito de credenciais por gestores de palavras-passe.',
-      'Manter cadernos com dados sensíveis fechados e guardados em local seguro.',
-      'Respeitar escrupulosamente os procedimentos de salvaguarda de informação definidos pelo agrupamento.',
+      'Substituir o registo manuscrito de credenciais por um gestor de palavras-passe cifrado.',
+      'Evitar manter cadernos com informações confidenciais abertos sobre a secretária.',
+      'Guardar registos físicos indispensáveis em local seguro, respeitando os procedimentos do agrupamento de escolas.',
     ],
-    tools: ['Gestores de Palavras-Passe', 'Armazenamento Físico Seguro'],
-    speechText:
-      'Sou o caderno aberto com apontamentos confidenciais e credenciais escritas à mão. Se perder o caderno ou alguém o fotografar, toda a informação fica comprometida. Utilize suportes digitais cifrados e evite registar dados sensíveis de alunos em cadernos desprotegidos.',
+    tools: ['Gestor de palavras-passe', 'Procedimentos do Agrupamento', 'Arquivo fechado'],
+    audioSummary:
+      'Um caderno aberto com palavras-passe manuscritas e classificações de alunos fica vulnerável a leitura indevida, fotografia não autorizada, extravio ou furto sem qualquer proteção digital. Substitua o registo de credenciais em papel por um gestor de palavras-passe e proteja a informação segundo os procedimentos do agrupamento.',
   },
   {
     id: 'phone',
     number: 7,
     title: 'Smartphone Desbloqueado',
     shortTitle: 'Smartphone Desbloqueado',
-    x: 69,
-    y: 44,
-    w: 12,
-    h: 30,
-    risk: 'Acesso não autorizado a mensagens, correio eletrónico institucional e códigos de autenticação (MFA).',
-    consequences: 'Compromisso das contas associadas à escola, leitura de comunicações profissionais e exfiltração de dados.',
+    theme: 'Segurança móvel e autenticação',
+    x: 70.2,
+    y: 48.5,
+    w: 9.2,
+    h: 24.5,
+    zIndex: 15,
+    risk: 'Acesso não autorizado a mensagens, correio eletrónico institucional, aplicações escolares e códigos de autenticação.',
+    consequences:
+      'Leitura de comunicações privadas, compromisso da conta escolar por acesso ao segundo fator e vulnerabilidade a fraudes.',
     bestPractices: [
-      'Configurar um PIN robusto, palavra-passe ou autenticação biométrica obrigatória.',
-      'Ativar o bloqueio automático de ecrã após curto período de inatividade.',
-      'Instalar aplicações de autenticação oficial (Microsoft / Google Authenticator).',
-      'Manter o sistema operativo e as apps atualizadas.',
-      'Ativar serviços de localização e eliminação remota (Find My Device).',
+      'Configurar um PIN robusto, palavra-passe ou autenticação biométrica no desbloqueio.',
+      'Definir um tempo curto para o bloqueio automático do ecrã.',
+      'Manter o sistema operativo e as aplicações móveis permanentemente atualizados.',
+      'Utilizar aplicações dedicadas de autenticação multifator, como Microsoft Authenticator ou Google Authenticator.',
+      'Ativar as funções de localização, bloqueio e eliminação remota de dados em caso de perda.',
+      'Desconfiar de mensagens fraudulentas (smishing) e de códigos QR de origem duvidosa.',
     ],
-    tools: ['Microsoft Authenticator / Google Authenticator', 'Bloqueio Biométrico / PIN', 'Localização e Limpeza Remota'],
-    speechText:
-      'Sou o smartphone desbloqueado na mesa. Como recebo códigos de autenticação multifator e emails da escola, quem me aceder ganha controlo sobre as suas contas. Proteja-me com PIN robusto ou biometria, configure o bloqueio automático e ative a localização remota.',
+    tools: [
+      'PIN robusto / Biometria',
+      'Microsoft / Google Authenticator',
+      'Localização e limpeza remota',
+      'Proteção contra smishing',
+    ],
+    audioSummary:
+      'Um smartphone desbloqueado sobre a secretária dá acesso direto a correio eletrónico institucional, mensagens, aplicações escolares e códigos de autenticação multifator. Proteja o equipamento com PIN robusto ou biometria, ative o bloqueio automático e a localização remota e desconfie de SMS fraudulentas ou códigos QR suspeitos.',
   },
   {
     id: 'usb',
     number: 8,
     title: 'Dispositivo de Armazenamento USB',
     shortTitle: 'Dispositivo USB',
-    x: 74,
-    y: 65,
-    w: 16,
-    h: 18,
-    risk: 'Perda ou furto de dados confidenciais e potencial propagação de malware através de suporte removível.',
-    consequences: 'Exposição de ficheiros institucionais ou infeção do computador portátil por ransomware ou vírus transportados na pen.',
+    theme: 'Armazenamento amovível e malware',
+    x: 77,
+    y: 68.5,
+    w: 8,
+    h: 19.5,
+    zIndex: 25,
+    risk: 'Perda ou furto de dispositivos com informação escolar confidencial e risco de propagação de malware por pens desconhecidas.',
+    consequences:
+      'Fuga de dados pessoais de alunos em caso de extravio ou infeção do computador escolar ao ligar suportes externos não verificados.',
     bestPractices: [
-      'Cifrar sempre os dados sensíveis antes de os colocar em dispositivos USB (VeraCrypt ou 7-Zip com AES-256).',
-      'Nunca ligar dispositivos USB de origem desconhecida ou encontrados em espaços públicos.',
-      'Utilizar BitLocker To Go nas edições de Windows compatíveis.',
-      'Transmitir palavras-passe de ficheiros cifrados por um canal distinto (ex: SMS ou chamada).',
+      'Proteger sempre ficheiros sensíveis com cifra antes de os copiar para uma pen USB.',
+      'Utilizar o 7-Zip em formato .7z com algoritmo AES-256 e opção de cifra dos nomes dos ficheiros.',
+      'Criar contentores cifrados com VeraCrypt (quando autorizado e instalado) ou usar BitLocker To Go em edições compatíveis do Windows.',
+      'Nunca ligar dispositivos USB de origem desconhecida ao computador da escola ou pessoal.',
+      'Enviar a palavra-passe de ficheiros cifrados por um canal de comunicação distinto daquele onde enviou o ficheiro.',
     ],
-    tools: ['VeraCrypt (Contentores cifrados)', '7-Zip (AES-256 e nomes cifrados)', 'BitLocker To Go'],
-    speechText:
-      'Sou a pen USB ligada ao lado do telemóvel. Se me perder sem cifra, qualquer pessoa acede ao seu conteúdo. Utilize sempre contentores VeraCrypt ou ficheiros 7-Zip protegidos com AES-256 para os seus dados. E nunca ligue dispositivos USB de proveniência duvidosa.',
+    tools: ['7-Zip (.7z AES-256)', 'VeraCrypt', 'BitLocker To Go', 'Canal distinto para senhas'],
+    audioSummary:
+      'Transportar informação escolar numa pen USB sem cifra arrisca a fuga de dados confidenciais em caso de perda ou furto, enquanto ligar pens desconhecidas pode propagar malware. Cifre os ficheiros com 7-Zip em .7z (AES-256), VeraCrypt ou BitLocker To Go, nunca ligue dispositivos desconhecidos e envie senhas por um canal distinto.',
   },
 ];
 
-export const QUESTIONARIO_ESTACAO_2 = [
+export const QUESTIONARIO_ESTACAO_2: SecretariaQuizQuestion[] = [
   {
     id: 1,
-    pergunta: 'Qual é a principal medida de segurança a adotar imediatamente quando o professor se afasta da secretária?',
+    tema: 'Controlo de acessos e bloqueio',
+    relatedItemId: 'laptop',
+    pergunta:
+      'Qual é a medida imediata mais eficaz a adotar ao afastar-se do portátil escolar durante uma pausa?',
     opcoes: [
-      'Desligar o monitor do computador no botão de energia.',
-      'Bloquear a sessão utilizando a combinação Windows + L.',
-      'Deixar o documento de classificações aberto para consulta rápida no regresso.',
-      'Minimizar todas as janelas ativas.',
+      'Bloquear a sessão utilizando a combinação de teclas Windows + L.',
+      'Desligar apenas o ecrã mantendo a sessão aberta.',
+      'Deixar os documentos abertos para retomar o trabalho mais depressa.',
+      'Minimizar as janelas para o ambiente de trabalho ficar vazio.',
     ],
-    respostaCorreta: 1,
+    respostaCorreta: 0,
     explicacao:
-      'Bloquear a sessão com Windows + L (ou Control+Command+Q no Mac) impede o acesso não autorizado à sessão de trabalho e às plataformas escolares durante a ausência do docente.',
+      'Bloquear a sessão com Windows + L (ou Control + Command + Q no macOS) impede de imediato que terceiros acedam às plataformas escolares e aos ficheiros abertos.',
+    recomendacao:
+      'Rever boas práticas de bloqueio de sessão e cifra do portátil (Elemento 2).',
   },
   {
     id: 2,
-    pergunta: 'Porque é perigoso deixar notas adesivas (post-its) com palavras-passe coladas no ecrã do computador?',
+    tema: 'Gestão de credenciais',
+    relatedItemId: 'postit',
+    pergunta:
+      'Porque representa um risco grave colar uma nota adesiva com palavras-passe junto ao ecrã do computador?',
     opcoes: [
-      'Porque gastam papel desnecessariamente.',
-      'Porque interferem com a ventilação do monitor.',
-      'Porque expõem credenciais de acesso a qualquer pessoa que entre na sala, facilitando acessos indevidos.',
-      'Porque atrasam o arranque do sistema operativo.',
+      'Porque reduz a duração da bateria do computador portátil.',
+      'Porque impede o funcionamento correto do antivírus instalado.',
+      'Porque expõe as credenciais a qualquer pessoa na sala, potenciando acessos indevidos às contas.',
+      'Porque bloqueia as atualizações automáticas do sistema operativo.',
     ],
     respostaCorreta: 2,
     explicacao:
-      'Notas adesivas com palavras-passe à vista violam as regras básicas de higiene digital, permitindo que colegas, visitantes ou alunos obtenham acesso direto às contas institucionais.',
+      'Credenciais visíveis em papel podem ser lidas ou fotografadas em segundos, comprometendo tanto a conta escolar como outros serviços onde a mesma palavra-passe tenha sido reutilizada.',
+    recomendacao:
+      'Substituir notas adesivas por gestores de palavras-passe como KeePassXC ou Bitwarden e ativar MFA (Elemento 3).',
   },
   {
     id: 3,
-    pergunta: 'Qual é a ferramenta recomendada para armazenar de forma segura dezenas de palavras-passe diferentes sem as memorizar todas?',
+    tema: 'Gestão de credenciais e MFA',
+    relatedItemId: 'postit',
+    pergunta:
+      'Que solução tecnológica permite guardar palavras-passe longas, robustas e únicas para cada serviço sem depender de papéis ou memória?',
     opcoes: [
-      'Um caderno de notas guardado na gaveta da secretária.',
-      'Um ficheiro de texto simples no ambiente de trabalho.',
-      'Um gestor de palavras-passe credenciado (como KeePassXC ou Bitwarden).',
-      'Utilizar sempre a mesma palavra-passe em todas as plataformas.',
+      'Um ficheiro de texto simples guardado no ambiente de trabalho.',
+      'A repetição da mesma palavra-passe fácil em todas as plataformas.',
+      'Um caderno aberto na mesa da sala dos professores.',
+      'Um gestor de palavras-passe seguro, como o KeePassXC ou o Bitwarden.',
     ],
-    respostaCorreta: 2,
+    respostaCorreta: 3,
     explicacao:
-      'Os gestores de palavras-passe permitem gerar e guardar credenciais únicas e complexas cifradas num cofre seguro, exigindo apenas que memorize uma única palavra-passe mestra.',
+      'Os gestores de palavras-passe armazenam credenciais únicas e complexas num cofre cifrado, protegido por uma única palavra-passe mestra.',
+    recomendacao:
+      'Adotar o KeePassXC ou o Bitwarden para eliminar o registo de credenciais em papel (Elementos 3 e 6).',
   },
   {
     id: 4,
-    pergunta: 'No âmbito do RGPD e da proteção de dados, como devem ser tratados os documentos impressos com classificações e dados dos alunos?',
+    tema: 'RGPD e proteção documental',
+    relatedItemId: 'papers',
+    pergunta:
+      'À luz do RGPD, como devem ser tratados os documentos impressos com pautas, testes e dados pessoais dos alunos?',
     opcoes: [
-      'Deixados em cima da secretária para facilitar a consulta pelos alunos.',
-      'Protegidos ao abrigo de uma política de secretária limpa, guardados em armários com chave e destruídos em segurança quando já não forem necessários.',
-      'Reciclados diretamente no ecoponto comum da sala de professores sem cuidados especiais.',
-      'Fotografados e partilhados num grupo público de mensagens.',
+      'Mantidos em cima da secretária para consulta rápida durante o intervalo.',
+      'Protegidos com política de secretária limpa, guardados em armários fechados e destruídos em segurança quando deixarem de ser necessários.',
+      'Colocados diretamente no caixote do papel comum sem rasgar nem triturar.',
+      'Partilhados por fotografia em grupos informais para agilizar reuniões.',
     ],
     respostaCorreta: 1,
     explicacao:
-      'O RGPD aplica-se integralmente aos dados em papel. Devem aplicar-se medidas rigorosas de confidencialidade, armazenamento em locais seguros e destruição certificada.',
+      'O RGPD aplica-se igualmente ao formato em papel, exigindo confidencialidade, minimização de dados, armazenamento fechado à chave e destruição segura.',
+    recomendacao:
+      'Aplicar a política de secretária limpa (Clean Desk Policy) e o armazenamento seguro de pautas (Elemento 5).',
   },
   {
     id: 5,
-    pergunta: 'Como se deve proceder perante uma pen USB encontrada no chão da escola cuja proveniência é desconhecida?',
+    tema: 'Segurança de dispositivos USB',
+    relatedItemId: 'usb',
+    pergunta:
+      'Como deve agir um professor se encontrar uma pen USB de origem desconhecida no espaço escolar?',
     opcoes: [
-      'Ligar imediatamente ao portátil da escola para ver de quem é o conteúdo.',
-      'Formatar a pen num computador pessoal.',
-      'Nunca a ligar a nenhum equipamento escolar e entregá-la ao responsável de TIC do agrupamento.',
-      'Deixar a pen em cima da secretária para o dono a encontrar.',
+      'Ligá-la ao computador portátil pessoal para tentar descobrir o proprietário.',
+      'Formatá-la imediatamente num computador da sala de professores.',
+      'Nunca a ligar a qualquer equipamento e entregá-la ao responsável de TIC do agrupamento.',
+      'Testá-la num computador da biblioteca antes de a usar na aula.',
     ],
     respostaCorreta: 2,
     explicacao:
-      'Dispositivos USB desconhecidos podem conter malware avançado ou simular periféricos maliciosos (BadUSB). A conduta correta é nunca os ligar e entregá-los aos serviços técnicos de TIC.',
+      'Dispositivos USB desconhecidos podem propagar malware ou atuar como dispositivos maliciosos ao serem ligados; a única ação segura é não os ligar.',
+    recomendacao:
+      'Consolidar as regras de prevenção contra dispositivos USB desconhecidos e malware (Elemento 8).',
   },
   {
     id: 6,
-    pergunta: 'Qual é a utilidade da cifra do disco (ex: BitLocker ou Encriptação do dispositivo) num portátil escolar?',
+    tema: 'Cifra do equipamento',
+    relatedItemId: 'laptop',
+    pergunta:
+      'Qual é a função principal da cifra do disco (como BitLocker ou Encriptação do dispositivo) num portátil docente?',
     opcoes: [
-      'Acelerar a velocidade de ligação à internet da escola.',
-      'Garantir que, em caso de furto ou perda física do portátil, os dados armazenados permanecem ilegíveis sem a chave de recuperação.',
-      'Impedir que o computador aqueça demasiado durante o uso prolongado.',
-      'Atualizar automaticamente o antivírus todas as semanas.',
+      'Impedir que terceiros leiam os ficheiros do disco interno caso o portátil seja furtado ou perdido.',
+      'Aumentar a velocidade da ligação sem fios na sala de aula.',
+      'Substituir a necessidade de fazer cópias de segurança periódicas.',
+      'Bloquear automaticamente notificações durante uma projeção.',
     ],
-    respostaCorreta: 1,
+    respostaCorreta: 0,
     explicacao:
-      'A cifra do disco protege o armazenamento interno contra extração física de dados, tornando os ficheiros inacessíveis a terceiros caso o dispositivo seja roubado ou perdido.',
+      'Sem cifra do disco, alguém com acesso físico ao equipamento pode retirar o disco ou arrancar outro sistema para ler todos os ficheiros, mesmo sem saber a palavra-passe do utilizador.',
+    recomendacao:
+      'Verificar se o disco do portátil tem BitLocker ou Encriptação do dispositivo ativa (Elemento 2).',
   },
   {
     id: 7,
-    pergunta: 'O que deve ser feito para proteger adequadamente um router Wi-Fi doméstico ou de trabalho?',
+    tema: 'Segurança de redes Wi-Fi',
+    relatedItemId: 'router',
+    pergunta:
+      'Que conjunto de medidas reforça a segurança de um router Wi-Fi usado para trabalho docente?',
     opcoes: [
-      'Manter a palavra-passe de fábrica impressa na etiqueta para maior facilidade.',
-      'Desligar a firewall do router para melhorar o sinal.',
-      'Alterar as credenciais de administração predefinidas, utilizar WPA2/WPA3 e manter o firmware atualizado.',
-      'Partilhar a palavra-passe livremente nas redes sociais.',
+      'Manter a palavra-passe de fábrica para facilitar o suporte técnico.',
+      'Desativar a cifra sem fios para melhorar o alcance do sinal.',
+      'Partilhar a palavra-passe de administração com todos os visitantes.',
+      'Alterar as credenciais de administração predefinidas, usar WPA2 ou WPA3 e atualizar regularmente o firmware.',
     ],
-    respostaCorreta: 2,
+    respostaCorreta: 3,
     explicacao:
-      'Alterar credenciais padrão, usar cifras modernas (WPA2/WPA3) e atualizar o firmware protege a rede contra intrusões e ataques de exploração de vulnerabilidades.',
+      'Mudar as credenciais predefinidas, configurar WPA2/WPA3 e manter o firmware atualizado reduz o risco de intrusões e interceção de tráfego.',
+    recomendacao:
+      'Rever as configurações recomendadas para o router Wi-Fi e cuidados em redes públicas (Elemento 1).',
   },
   {
     id: 8,
-    pergunta: 'Qual é a principal vantagem da Autenticação Multifator (MFA) configurada com uma aplicação no telemóvel?',
+    tema: 'Segurança móvel e MFA',
+    relatedItemId: 'phone',
+    pergunta:
+      'Além de proteger o smartphone com PIN robusto ou biometria, porque se recomenda usar uma aplicação de autenticação (Microsoft ou Google Authenticator)?',
     opcoes: [
-      'Permite aceder às contas escolares sem introduzir qualquer palavra-passe.',
-      'Adiciona uma camada extra de segurança, exigindo um segundo fator verificado num dispositivo de confiança além da palavra-passe.',
-      'Garante chamadas telefónicas gratuitas na escola.',
-      'Evita a necessidade de atualizar o sistema operativo.',
+      'Porque elimina a necessidade de usar palavras-passe nas plataformas da escola.',
+      'Porque acrescenta um segundo fator de verificação, impedindo o acesso mesmo que a palavra-passe seja descoberta.',
+      'Porque corrige automaticamente vulnerabilidades em páginas web externas.',
+      'Porque encripta todos os documentos impressos guardados na pasta.',
     ],
     respostaCorreta: 1,
     explicacao:
-      'Mesmo que uma palavra-passe seja comprometida por phishing, a MFA impede o acesso não autorizado por exigir a aprovação ou código num segundo dispositivo seguro (o smartphone).',
+      'A autenticação multifator exige um código temporário ou aprovação no dispositivo pessoal, travando a maioria dos ataques de roubo de credenciais.',
+    recomendacao:
+      'Ativar autenticação multifator, bloqueio automático e localização remota no smartphone (Elemento 7).',
   },
   {
     id: 9,
-    pergunta: 'Como se deve proceder ao transportar dados confidenciais de alunos num dispositivo de armazenamento USB?',
+    tema: 'Proteção de ficheiros em USB',
+    relatedItemId: 'usb',
+    pergunta:
+      'Ao transportar dados confidenciais numa pen USB ou ao enviá-los em ficheiro .7z cifrado com 7-Zip (AES-256), como deve transmitir a palavra-passe ao destinatário?',
     opcoes: [
-      'Guardar os ficheiros diretamente sem qualquer proteção.',
-      'Proteger os dados através de um contentor cifrado (ex: VeraCrypt) ou arquivo comprimido com cifra AES-256.',
-      'Enviar os dados por email para um endereço pessoal.',
-      'Gravar a password num documento de texto na mesma pen.',
+      'Através de um canal de comunicação distinto daquele usado para enviar o ficheiro.',
+      'No próprio nome do ficheiro para não haver esquecimentos.',
+      'No mesmo email em que segue o ficheiro cifrado em anexo.',
+      'Num ficheiro de texto gravado na raiz da própria pen USB.',
     ],
-    respostaCorreta: 1,
+    respostaCorreta: 0,
     explicacao:
-      'A cifra com VeraCrypt ou 7-Zip (AES-256) assegura que, mesmo que a pen seja perdida ou furtada, os ficheiros confidenciais não podem ser lidos por terceiros.',
+      'Enviar a palavra-passe por um canal separado (por exemplo, chamada ou SMS quando o ficheiro seguiu por email) evita que a interceção de um único canal comprometa o conteúdo cifrado.',
+    recomendacao:
+      'Praticar a cifra de ficheiros com 7-Zip (AES-256), VeraCrypt ou BitLocker To Go e envio por canal distinto (Elemento 8).',
   },
   {
     id: 10,
-    pergunta: 'O que preconiza a política de secretária limpa (Clean Desk Policy) em ambiente escolar?',
+    tema: 'Segurança física e identidade',
+    relatedItemId: 'badge',
+    pergunta:
+      'Que cuidado essencial deve ter o professor com o seu cartão de identificação profissional?',
     opcoes: [
-      'Limpar o pó da secretária todas as manhãs com um pano húmido.',
-      'Manter o espaço de trabalho livre de documentos confidenciais desprotegidos e dispositivos desbloqueados quando o docente se ausenta.',
-      'Arrumar todos os lápis por ordem de tamanho.',
-      'Desligar o disjuntor da sala de aula no final do dia.',
+      'Deixá-lo visível na secretária da sala comum durante todo o dia.',
+      'Partilhar fotografias do cartão com código e número funcional em redes sociais.',
+      'Guardá-lo num local seguro quando não está em uso e comunicar de imediato qualquer perda ou furto.',
+      'Emprestá-lo a terceiros para abrir portas de áreas reservadas.',
     ],
-    respostaCorreta: 1,
+    respostaCorreta: 2,
     explicacao:
-      'A Clean Desk Policy evita que documentos com dados pessoais, pautas, post-its com passwords e portáteis desbloqueados fiquem expostos a olhares e acessos não autorizados.',
+      'A exposição ou perda do cartão pode facilitar engenharia social, usurpação de identidade e acessos físicos indevidos se o cartão controlar portas ou portões.',
+    recomendacao:
+      'Manter o cartão de identificação guardado em segurança e reportar de imediato perdas ou furtos (Elemento 4).',
   },
 ];

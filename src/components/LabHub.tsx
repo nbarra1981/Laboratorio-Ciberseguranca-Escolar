@@ -26,6 +26,8 @@ export function LabHub({
   onClearProgress,
 }: LabHubProps) {
   const [imageFailed, setImageFailed] = useState(false);
+  const activeCount = stationsRegistry.filter((s) => s.status === 'active').length;
+  const upcomingCount = stationsRegistry.length - activeCount;
 
   return (
     <div className="space-y-12 pb-10">
@@ -112,7 +114,7 @@ export function LabHub({
             </p>
           </div>
           <p className="text-xs font-mono text-slate-600 dark:text-slate-400 tabular-nums">
-            1 estação ativa · {stationsRegistry.length - 1} em preparação
+            {activeCount} {activeCount === 1 ? 'estação ativa' : 'estações ativas'} · {upcomingCount} em preparação
           </p>
         </div>
 
@@ -138,8 +140,9 @@ export function LabHub({
                           : 'text-slate-600 dark:text-slate-400'
                       }`}
                     >
-                      Estação {station.number} ·{' '}
-                      {isActive ? 'Disponível agora' : 'Próxima estação em breve'}
+                      {isActive
+                        ? `Estação ${station.number}`
+                        : `Estação ${station.number} · Próxima estação em breve`}
                     </span>
                     <span className="text-slate-500 dark:text-slate-400 font-mono tabular-nums">
                       {station.estimatedTime}
